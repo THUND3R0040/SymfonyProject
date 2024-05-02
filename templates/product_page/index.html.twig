@@ -1,69 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+{%extends "base.html.twig" %}
 
-<head>
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
 
+
+
+
+    {%block head%}
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <meta charset="UTF-8">
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PRODUCTS</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://use.fontawesome.com/a183c5deb5.js"></script>
+        <script src="https://kit.fontawesome.com/9d07734ae2.js" crossorigin="anonymous"></script>
+        <link href={{asset("assets/productPage/product.css")}} rel="stylesheet">
+
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
+    {% endblock%}
+    
     
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-    <meta charset="UTF-8">
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRODUCTS</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://use.fontawesome.com/a183c5deb5.js"></script>
-    <script src="https://kit.fontawesome.com/9d07734ae2.js" crossorigin="anonymous"></script>
-    <link href={{asset("assets/productPage/product.css")}} rel="stylesheet">
-
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
-</head>
-
-<body>
 
 
 
 
-    <header>
-        <nav class="nav">
-            <div class="navbar">
-                <div class="logo" data-aos="fade-right">
-                    <img src={{asset("assets/productPage/logos/basketv3.png")}} width="95px" height="95px" id="img">
-                </div>
-                <div class="links">
-                    <a href="../login" data-aos="fade-right" id="a4">LOGIN</a>
-                    <a href="../product_page" id="a1" data-aos="fade-right">PRODUCTS</a>
-                    <a href="#con" id="a2" data-aos="fade-right">CONTACT</a>
-                    <a id="a3" data-aos="fade-right">CART</a>
-
-                    
-                </div>
-            </div>
-            
-            <div class="mobile">
-                <button id="mb" data-aos="fade-right"><i class="fas fa-shopping-cart" style="color: rgb(255, 255, 255);font-size: 24px;"></i></button>
-                <div class="logo2" data-aos="fade-right">
-                    <img src={{asset("assets/productPage/logos/basketv3.png")}} width="95px" height="95px" id="img2">
-                </div>
-                <button id="bar" data-aos="fade-right"><i class="fas fa-bars"
-                        style="color: rgb(255, 255, 255);font-size: 24px;"></i></button>
-            
-            
-            </div>
-        </nav>
 
 
-    </header>
+    
+{% block heroClassContent %}
 
 <section class="hero">
     <div class="swiper-container">
@@ -99,67 +72,10 @@
 
 </section>
 
+{% endblock %}
 
 
-    
-       
-
-
-
-
-
-
-
-
-
-
-<div class="phone">
-    <a href="../product_page/product.php" id="href1">Products</a>
-    <a href="#con" id="href2">Contact</a>
-    <a href="../login/login.php" id="href4">Login</a>
-    <i class="far fa-window-close" id="close"></i>
-</div>
-
-
-
-<div class="cart">
-    <i class="far fa-window-close" id="cart_close"></i>
-    <div class="nbr">
-        <span class="num">
-
-        </span>
-        <span>
-            items in your cart
-        </span>
-    </div>
-
-    <p class="not_found">Your cart is empty</p>
-
-    <div class="main">
-        <div class="cart_full">
-            
-
-        </div>
-
-        <div class="total">
-            <span class="tt">Total</span>
-            <span class="money"></span>
-        </div>
-    </div>
-
-
-    <div class="checkout">
-
-        CHECKOUT
-
-    </div>
-
-</div>
-
-
-<button class="btt"><i class="fas fa-chevron-up bt"></i></button>
-
-
+{% block body%}
 <section class="type" id="type">
     <h1>Shoes for <span class="typed">Everyone</span></h1>
     <div class="shapes">
@@ -188,16 +104,6 @@
 
 
 
-
-
-
-    
-
-
-
-
-    
-
 <div class="title" data-aos="flip-left"
      data-aos-easing="ease-out-cubic"
      data-aos-duration="500"> 
@@ -221,7 +127,21 @@
 
 </section>
 
+{% endblock %}
 
+
+
+
+
+    
+
+
+
+
+    
+
+
+{% block footer %}
 <section class="footer" id="con">
 
     <div class="half1">
@@ -312,39 +232,15 @@
 
 
 </section>
-
-
-<div class="grey">
-
-</div>
-
-<div class="grey2">
-
-</div>
-
-    <!--AOS-->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
-
-    <!--jquery-->
+{% endblock %}
 
 
 
 
+{% block javascripts %}
 
-
-
-<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-</body>
-<!--
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>-->
-
-
+{{parent()}}
 <script src={{asset("assets/productPage/product.js")}}></script>
 
-</html>
+{% endblock %}
 

@@ -1,53 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends('base.html.twig') %}
 
-<head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <meta charset="UTF-8">
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOMEPAGE</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://use.fontawesome.com/a183c5deb5.js"></script>
-    <script src="https://kit.fontawesome.com/9d07734ae2.js" crossorigin="anonymous"></script>
-    <link href={{asset("assets/mainPage/style.css")}} rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-</head>
 
-<body>
-  
-    <header>
-            <nav class="nav">
-                <div class="navbar">
-                    <div class="logo"data-aos="fade-right">
-                        <img src={{asset("assets/mainPage/basketv3.png")}} width="95px" height="95px" id="img">
-                    </div>
-                    <div class="links">
-                        <a href="../login" data-aos="fade-right"id="a4">LOGIN</a>
-                        <a href="../product_page" id="a1"data-aos="fade-right">PRODUCTS</a>
-                        <a href="#con" id="a2"data-aos="fade-right">CONTACT</a>
-                        <a id="a3"data-aos="fade-right">CART</a>
-                    </div>
-                    </div>
-                    
-                    <div class="mobile">
-                        <button id="mb" data-aos="fade-right"><i class="fas fa-shopping-cart" style="color: rgb(255, 255, 255);font-size: 24px;"></i></button>
-                        <div class="logo2" data-aos="fade-right">
-                            <img src={{asset("assets/mainPage/basketv3.png")}} width="95px" height="95px" id="img2">
-                        </div>
-                        <button id="bar" data-aos="fade-right"><i class="fas fa-bars" style="color: rgb(255, 255, 255);font-size: 24px;"></i></button>
-                        
-                        
-                    </div>
-            </nav>   
 
+
+    {% block head %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <meta charset="UTF-8">
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HOMEPAGE</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://use.fontawesome.com/a183c5deb5.js"></script>
+        <script src="https://kit.fontawesome.com/9d07734ae2.js" crossorigin="anonymous"></script>
+
+        <link href={{asset("assets/mainPage/style.css")}} rel="stylesheet">
         
-    </header>
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    {% endblock %}
+    
 
+  
+    
+    
+{% block heroClassContent %}
     <section class="hero">
         
         <div class="collection"  data-aos="fade-up"
@@ -62,48 +41,9 @@
 
         
     </section>
-
-    <div class="phone">
-        <a href="../product_page" id="href1">Products</a>
-        <a href="#con" id="href2">Contact</a>
-        <a href="../login" id="href4">LOGIN</a>
-        <i class="far fa-window-close" id="close"></i> 
-    </div>
-
-
-<div class="cart">
-    <i class="far fa-window-close" id="cart_close" ></i>
-    <div class="nbr">
-        <span class="num">  
-            
-        </span>
-        <span>
-            items in your cart 
-        </span>
-    </div>
+{% endblock %}
     
-        <p class="not_found">Your cart is empty</p>
-
-        <div class="main">
-        <div class="cart_full">
-            
-            
-        </div>
-
-        <div class="total">
-            <span class="tt">Total</span>
-            <span class="money"></span>
-        </div>
-        </div>
-
-
-        <div class="checkout">
-            
-                CHECKOUT
-            
-        </div>
-    
-</div>
+{% block body %}
 
 
 
@@ -114,7 +54,9 @@
 
 
 
-<button class="btt"><i class="fas fa-chevron-up bt"></i></button>
+
+
+
  
 <section class="container1" id="type">
    
@@ -361,121 +303,25 @@
 
 </section>
 
+{% endblock %}
 
-<section class="footer" id="con">
-
-    <div class="half1">
-        <div class="f1">
-            <h1>COMPANY</h1>
-            <p>Who we are</p>
-            <p>Find Us Near You</p>
-            <p>Shop</p>
-        </div>
-        <div class="f1">
-            <h1>CUSTOMER CARE</h1>
-            <p>Gift Cards</p>
-            <p>Contact Us</p>
-            <p>Shipping</p>
-            <p>Returns</p>
-        </div>
-        <div class="f1">
-            <h1>THE DRY STUFF</h1>
-            <p>Privacy Policy</p>
-            <p>Terms & Conditions</p>
-            <p>Accessibility Statement</p>
-        </div>
-    </div>
-<div class="acc">
-<div id="accordion">
-    <h3>COMPANY</h3>
-    <div>
-        <p>Who we are</p>
-        <p>Find Us Near You</p>
-        <p>Shop</p>
-    </div>
-    <h3>CUSTOMER CARE</h3>
-    <div>
-        <p>Gift Cards</p>
-        <p>Contact Us</p>
-        <p>Shipping</p>
-        <p>Returns</p>
-    </div>
-    <h3 >THE DRY STUFF</h3>
-    <div>
-        <p>Privacy Policy</p>
-        <p>Terms & Conditions</p>
-        <p>Accessibility Statement</p>
-    </div>
-    
-        
-         
-    </div>
-</div>
-
-    <div class="sep">
-    </div>
-    
-
-    <div class="half2">
-        <div class="icons">
-            
-            <button class="facebook sm" data-aos="zoom-in-right" data-aos-duration="500"><a
-                    href="https://www.facebook.com/ahmed.thunder.98" target="_blank"><i
-                        class="fab fa-facebook-f dd"></i></a></button>
-            <button class="twitter sm" data-aos="zoom-in-right" data-aos-duration="1000"><a
-                    href="https://twitter.com/THUNDER84630828" target="_blank"><i class="fab fa-twitter dd"></i></a></button>
-            <button class="linkedin sm" data-aos="zoom-in-right" data-aos-duration="1500"><a
-                    href="https://www.linkedin.com/in/ahmed-gargouri-2431b2204/" target="_blank"><i
-                        class="fab fa-linkedin-in dd "></i></a></button>
-            <button class="youtube sm" data-aos="zoom-in-right" data-aos-duration="2000"><a
-                    href="https://www.youtube.com/channel/UCFTewZU0FnvLtm5rSPGVurA" target="_blank"><i
-                        class="fab fa-youtube dd"></i></a></button>
-            <button class="instagram sm" data-aos="zoom-in-right" data-aos-duration="2500"><a href="" target="_blank"><i
-                        class="fab fa-instagram dd"></i></a></button>
-            
-        </div>
-        <div class="rights">all rights reserved © 2021</div>
-    </div>
-    
+{% block footer %}
+{{ 
+    parent()
+}}
+{% endblock %}
 
 
 
 
-
-</section>
-
+{% block javascripts %}
 
 
-
-<div class="grey">
-
-</div>
-
-<div class="grey2">
-
-</div>
-
-
-
-<!--AOS-->
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-    AOS.init();
-</script>
-
-
-<!--jquery-->
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-
-
-<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-</body>
-<!--
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>-->
+{{parent()}}
 
 <script src={{asset("assets/mainPage/cart.js")}}></script>
 <script src={{asset("assets/mainPage/script.js")}}></script>
-</html>
+
+
+
+{% endblock %}

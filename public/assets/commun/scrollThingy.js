@@ -9,12 +9,11 @@ window.addEventListener('scroll', function () {
     bar.classList.toggle('black', windowPosition);
     cart.classList.toggle('black', windowPosition);
     if (windowPosition) {
-        img.src = "assets/productPage/logos/logo.png";
-        img2.src = "assets/productPage/logos/logo.png";
+        img.src = "assets/logos/logo.png";
+        img2.src = "assets/logos/logo.png";
     }
     if (!windowPosition) {
-        img.src = "assets/productPage/logos/basketv3.png";
-        img2.src = "assets/productPage/logos/basketv3.png";
+        img.src = "assets/logos/basketv3.png";
+        img2.src = "assets/logos/basketv3.png";
     }
-
 })
