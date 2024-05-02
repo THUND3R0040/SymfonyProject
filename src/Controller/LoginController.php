@@ -9,8 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
+
     public function index(): Response
     {
+        //retrieving the login page
+        
+
+
+
+
         return $this->render('login/index.html.twig');
     }
 }
