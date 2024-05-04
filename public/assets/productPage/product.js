@@ -171,6 +171,8 @@ setInterval(function () {
 
 }, 1);
 
+
+
 let prices;
 let btn;
 let names;
@@ -263,7 +265,7 @@ function renderProducts() {
 
         let inptValue = inpt.value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'filter.php', true);
+        xhr.open('POST', '', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function () {
             if (xhr.status === 200) {
