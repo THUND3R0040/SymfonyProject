@@ -1,3 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+filterProduct:
+    path: /filter
+    controller : App\Controller\ProductPageController::filter

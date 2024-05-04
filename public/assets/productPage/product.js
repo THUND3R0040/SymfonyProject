@@ -253,6 +253,7 @@ const get = () => {
 }
 
 function renderProducts() {
+    console.log("qzdqzd");
     return new Promise(resolve => {
         let genre = "everyone";
         if (kidClicked == 1) {
@@ -264,17 +265,22 @@ function renderProducts() {
         }
 
         let inptValue = inpt.value;
+        console.log(inptValue);
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.open('POST', '/filter', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
-            if (xhr.status === 200) {
+            if (xhr.status === 200){
                 container1.innerHTML = this.response;
                 resolve();
             }
         };
-        let data = "filter=" + inptValue + "&genre=" + genre;
-        xhr.send(data);
+
+        xhr.send(JSON.stringify({
+            filter:inptValue,
+            genre:genre
+        }))
+
     });
 }
 

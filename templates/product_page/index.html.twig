@@ -124,22 +124,7 @@
 
 
 <section class="container1">
-    {% for product in products %}
-    <div class="pr" style="position: static;">
-        <div class="overlay" style="background-image: url({{ asset('assets/productPage/'~product.pOverlay()) }});"></div>
-        <img class="pro" src="{{ asset('assets/productPage/'~product.pImg()) }}">
-        <span class="lorem">{{ product.pName() }}</span>
-        <span class="price">{{ product.pPrice() }}</span>
-        <input type="hidden" name="p_name" value="{{ product.pName() }}" class="hiddenName">
-        <input type="hidden" name="p_price" value="{{ product.pPrice() }}">
-        <input type="hidden" name="p_img" value="{{ product.pImg() }}">
-        <input type="hidden" name="p_doc" value="{{ product.pDoc }}">
-        <input type="hidden" name="p_type" value="{{ product.pType() }}">
-        <input type="hidden" name="p_ft" value="{{ product.pFt() }}">
-        <input type="hidden" name="p_bs" value="{{ product.pBs() }}">
-        <button class="glow-on-hover">Buy</button>
-    </div>
-    {% endfor %}
+
 
 
 
