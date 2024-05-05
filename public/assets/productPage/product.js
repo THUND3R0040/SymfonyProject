@@ -272,6 +272,7 @@ function renderProducts() {
         xhr.onload = function () {
             if (xhr.status === 200){
                 container1.innerHTML = this.response;
+                console.log(this.response);
                 resolve();
             }
         };
@@ -309,6 +310,7 @@ const cartUi = async () => {
     for (let i = 0; i < btn.length; i++) {
         btn[i].addEventListener('click', (e) => {
             addToCart(e.target.parentElement.childNodes[5].innerHTML);
+            console.log(e.target.parentElement.childNodes[5].innerHTML);
             let span1 = document.createElement("img");
             let div = document.createElement("div");
             let span2 = document.createElement("span");
@@ -324,6 +326,7 @@ const cartUi = async () => {
             span2.innerHTML = `${e.target.parentElement.childNodes[5].innerHTML}`;
             span5.innerHTML = `${e.target.parentElement.childNodes[15].value}`;
             span1.src = `${e.target.parentElement.childNodes[13].value}`;
+            console.log(e.target.parentElement.childNodes[13].value);
             span1.classList = "cart-item";
             span2.classList = "cart-price";
             span3.classList = "cart-quantity";
@@ -356,17 +359,17 @@ function addToCart(id) {
     var xhr = new XMLHttpRequest();
 
     // Configure the AJAX request
-    xhr.open('POST', 'cart.php', true);
+    xhr.open('POST', '/cart', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 
     xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
+        if(xhr.status === 401){
+            // http not authorized
+            window.location.href = "../login";
+        }
+        else if (xhr.status >= 200 && xhr.status < 300) {
             // Request was successful, handle response if needed
-            if (xhr.responseText == "u need to login") {
-                window.location.href = "../login/login.php";
-
-            }
             console.log(xhr.status);
         } else {
             // Request failed
@@ -374,10 +377,9 @@ function addToCart(id) {
         }
     };
 
-    // Prepare the data to send
-    let data = 'product_id=' + id;
-    // Send the AJAX request
-    xhr.send(data);
+    xhr.send(JSON.stringify({
+        product_id : id
+    }))
 }
 
 

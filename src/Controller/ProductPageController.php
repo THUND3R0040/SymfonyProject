@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\Product;
 
 use PHPUnit\Util\Json;
@@ -16,11 +17,7 @@ class ProductPageController extends AbstractController
     #[Route('/productPage', name: 'app_productPage')]
     public function index(ManagerRegistry $doctrine,  ): Response
     {
-        $prod = $doctrine->getRepository(Product::class)->findAll();
-
-        return $this->render('product_page/index.html.twig', [
-            'products' => $doctrine->getRepository(Product::class)->findAll(),
-        ]);
+        return $this->render('product_page/index.html.twig');
     }
 
     #[Route('/filter', name: 'filterProduct', methods: ['POST'])]
@@ -89,7 +86,7 @@ class ProductPageController extends AbstractController
             <span class='price'>$p_price</span>
             <input type='hidden' name='p_name' value='$p_name' class='hiddenName'>
             <input type='hidden' name='p_price' value='$p_price'>
-            <input type='hidden' name='p_img' value='$p_img'>
+            <input type='hidden' name='p_img' value='assets/productPage/$p_img'>
             <input type='hidden' name='p_doc' value='$p_doc'>
             <input type='hidden' name='p_type' value='$p_type'>
             <input type='hidden' name='p_ft' value='$p_ft'>
@@ -101,8 +98,42 @@ class ProductPageController extends AbstractController
         $response->setStatusCode(Response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
+    }
+
+
+    #[Route('/cart', name: 'cart', methods: ['POST'])]
+    function cart (Request $req, ManagerRegistry $doctrine):Response
+    {
+        $session = $req->getSession();
+        $response = new Response();
+        $dateString = date('Y-m-d');
+        $date = \DateTime::createFromFormat('Y-m-d', $dateString);
+        $reqContent = $req->getContent();
+        $Json = json_decode($reqContent, true);
+        $productid = $Json['product_id'];
+
+        if($session->get('email') === null){
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            return $response;
+        }
+        else{
+            $email = $session->get('email');
+            $cart = new Cart();
+            $t = time();
+            $cart->setCommId($t);
+            $cart->setPName($productid);
+            $cart->setAddDate($date);
+            $cart->setUEmail($email);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($cart);
+            $entityManager->flush();
+            $response->setStatusCode(Response::HTTP_OK);
+            return $response;
+        }
 
     }
+
 
 }
 

@@ -5,3 +5,9 @@ controllers:
 filterProduct:
     path: /filter
     controller : App\Controller\ProductPageController::filter
+
+
+
+cart:
+    path : /cart
+    controller : App\Controller\ProductPageController::cart
