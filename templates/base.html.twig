@@ -12,7 +12,15 @@
                         <img src={{asset("assets/logos/basketv3.png")}} width="95px" height="95px" id="img">
                     </div>
                     <div class="links">
-                        <a href="../login" data-aos="fade-right"id="a4">LOGIN</a>
+                        {% if app.session.get("u_email") is not null %}
+                            {% if app.session.get('isAdmin')==1 %}
+                                <a href="../adminInterface" data-aos="fade-right"id="a4">Hi,{{ app.session.get("u_name")|split(" ")|first }}</a>
+                            {% else %}
+                                <a href="../userInterface" data-aos="fade-right"id="a4">Hi,{{ app.session.get("u_name")|split(" ")|first }}</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="../login" data-aos="fade-right"id="a4">LOGIN</a>
+                        {% endif %}
                         <a href="../product_page" id="a1"data-aos="fade-right">PRODUCTS</a>
                         <a href="#con" id="a2"data-aos="fade-right">CONTACT</a>
                         <a id="a3"data-aos="fade-right">CART</a>
@@ -35,6 +43,7 @@
             <a href="../login" id="href4">Login</a>
             <i class="far fa-window-close" id="close"></i>
         </div>
+        {% block cart %}
         <div class="cart">
             <i class="far fa-window-close" id="cart_close"></i>
             <div class="nbr">
@@ -70,7 +79,7 @@
         </div>
         
         <button class="btt"><i class="fas fa-chevron-up bt"></i></button>
-        
+        {% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}
         <section class="footer" id="con">

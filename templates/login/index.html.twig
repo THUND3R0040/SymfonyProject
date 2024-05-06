@@ -21,7 +21,7 @@
 </head>
     <body>
 
-
+{#
     <div class="activation-alert">
         An activation Link has been sent to your Email
     </div>
@@ -34,7 +34,7 @@
         Invalid email or password
     </div>
 
-
+#}
     <header>
         <nav class="nav">
             <div class="navbar">
@@ -80,7 +80,7 @@
                     Sign In
                 </button>
             </div>
-            <form class="fr2" method="post" action=>
+            <form class="fr2" method="post" action={{ path('registerUser') }}>
                 <h1>
                     Create Account
                 </h1>
@@ -98,32 +98,59 @@
                     <i class="fas fa-unlock-alt fa-lg fa-fw" aria-hidden="true"></i>
                     
                 </div>
-                <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000" name="signup">Sign Up</button>
+                <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000" name="signup" type="submit">Sign Up</button>
                 
             </form>
         </div>
     
     
     </section>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="phone">
+
+
+    {# signup flashBag #}
+
+    {% for message in app.flashes('success') %}
+        <div class="activation-alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('notActiveAlert') %}
+        <div class="notActiveAlert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# sign in flashBag #}
+
+    {% for message in app.flashes('invalidMailOrPassword') %}
+        <div class="invalidMailOrPassword">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('emailAlreadyUsed') %}
+        <div class="emailAlreadyUsed">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="phone">
         <a href="../productPage" id="href1">Products</a>
         <a href="#con" id="href2">Contact</a>
         <a href="../login" id="href4">Login</a>

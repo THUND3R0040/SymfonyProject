@@ -5,20 +5,34 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\Product;
 
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Util\Json;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 class ProductPageController extends AbstractController
 {
     #[Route('/productPage', name: 'app_productPage')]
-    public function index(ManagerRegistry $doctrine,  ): Response
+    public function index(ManagerRegistry $doctrine, Request $request,SessionInterface $session,EntityManagerInterface $entityManager): Response
     {
-        return $this->render('product_page/index.html.twig');
+        $session = $request->getSession();
+        $cartItems = [];
+        if($session->has("u_email")){
+            $cartItems = $doctrine->getRepository(Cart::class)->cartItemsForEmail($entityManager,$session->get("u_email"));
+
+        }
+        return $this->render('product_page/index.html.twig',
+            ["cartItems" => $cartItems]
+        );
     }
+
+
+
+
 
     #[Route('/filter', name: 'filterProduct', methods: ['POST'])]
     public function filter(Request $req, ManagerRegistry $doctrine,LoggerInterface $logger)
@@ -112,12 +126,13 @@ class ProductPageController extends AbstractController
         $Json = json_decode($reqContent, true);
         $productid = $Json['product_id'];
 
-        if($session->get('email') === null){
+
+        if($session->get('u_email') === null){
             $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
             return $response;
         }
         else{
-            $email = $session->get('email');
+            $email = $session->get('u_email');
             $cart = new Cart();
             $t = time();
             $cart->setCommId($t);

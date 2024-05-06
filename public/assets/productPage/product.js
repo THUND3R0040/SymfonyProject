@@ -310,7 +310,6 @@ const cartUi = async () => {
     for (let i = 0; i < btn.length; i++) {
         btn[i].addEventListener('click', (e) => {
             addToCart(e.target.parentElement.childNodes[5].innerHTML);
-            console.log(e.target.parentElement.childNodes[5].innerHTML);
             let span1 = document.createElement("img");
             let div = document.createElement("div");
             let span2 = document.createElement("span");

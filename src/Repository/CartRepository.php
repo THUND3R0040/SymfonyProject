@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Cart;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,20 +23,28 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
+
+
+
 //    /**
 //     * @return Cart[] Returns an array of Cart objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+
+    public function cartItemsForEmail (EntityManagerInterface $entityManager,string $email)
+    {
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('product')
+            ->from(Cart::class, 'cart')
+            ->join('App\Entity\Product', 'product','With','product.p_name = cart.p_name')
+            ->join('App\Entity\User', 'user','With','cart.u_email = user.u_email')
+            ->where('user.u_email = :email')
+            ->setParameter('email', $email);
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Cart
 //    {

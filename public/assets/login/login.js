@@ -182,7 +182,9 @@ signin.addEventListener("click",()=>{
     no.setAttribute("name","signin");
     no.style.marginTop="20px";
     test=1;
+    document.querySelector(".fr2").action = "/signin";
 }
+
     
     
 
@@ -196,7 +198,7 @@ else{
         no.style.marginTop = "10px";
         test=0;
         no.setAttribute("name","signup");
-
+        document.querySelector(".fr2").action = "/registerUser";
 }
 });
     
@@ -255,3 +257,30 @@ for (let i = 0; i < dd.length; i++) {
 let activation_alert =  document.querySelector('.activation-alert');
 let notActiveAlert = document.querySelector('.notActiveAlert');
 let invalidMailOrPassword = document.querySelector('.invalidMailOrPassword');
+let emailAlreadyUsed = document.querySelector('.emailAlreadyUsed');
+
+
+if(activation_alert){
+    setTimeout(()=>{
+        activation_alert.style.display = "none";
+    },5000);
+}
+
+if(notActiveAlert){
+    setTimeout(()=>{
+        notActiveAlert.style.display = "none";
+    },5000);
+}
+
+if(invalidMailOrPassword){
+    setTimeout(()=>{
+        invalidMailOrPassword.style.display = "none";
+    },5000);
+}
+
+
+if(emailAlreadyUsed){
+    setTimeout(()=>{
+        emailAlreadyUsed.style.display = "none";
+    },5000);
+}

@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use http\Env\Request;
-use Psr\Log\LoggerInterface;
+use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\throwException;
+
 
 class LoginController extends AbstractController
 {
@@ -25,13 +26,76 @@ class LoginController extends AbstractController
     }
 
 
-    public function handleForm(Request $req){
-        $loginForm = $this->createForm(LoginFormType::class);
+    /**
+     * @throws RandomException
+     */
+    #[Route('/registerUser',name: 'registerUser')]
+    public function registerUser(Request $req, ManagerRegistry $doctrine,SessionInterface $session,MailerInterface $mailer):Response{
+        $name = $req->get('name');
+        $email = $req->get('email');
+        $password = password_hash($req->get('password'), PASSWORD_BCRYPT);
+        $date = new \DateTime();
+
+        $users = $doctrine->getRepository(User::class)->findBy(['u_email'=>$req->get('email')]);
+
+        if(sizeof($users)!=0){
+            $session->getFlashBag()->add('emailAlreadyUsed','Email is already used');
+            return $this->redirectToRoute('app_login');
+        }
+
+
+
+        $user = new User();
+        $user->setUEmail($email);
+        $user->setIsActive(0);
+        $user->setIsAdmin(0);
+        $user->setRegDate($date);
+        $user->setUPassword($password);
+        $user->setUName($name);
+
+        $manager = $doctrine->getManager();
+        $manager->persist($user);
+        $manager->flush();
+        $session->getFlashBag()->add('success', 'An activation Link has been sent to your Email');
+        $this->sendEmail($mailer,$email,bin2hex(random_bytes(16)));
+        return $this->redirectToRoute('app_login');
+    }
+
+    #[Route('/signin', name: 'signin')]
+    public function signin(ManagerRegistry $doctrine,SessionInterface $session,Request $req):Response{
+
+        $users = $doctrine->getRepository(User::class)->findBy(['u_email'=>$req->get('email')]);
+
+        if(sizeof($users)==0){
+            $session->getFlashBag()->add('invalidMailOrPassword','invalid Email or Password');
+            return $this->redirectToRoute('app_login');
+        }
+        else{
+            if(password_verify($req->get('password'),$users[0]->getUPassword())){
+                if($users[0]->getIsActive()==1){
+                    $session = $req->getSession();
+                    $session->set('u_email',$req->get('email'));
+                    $session->set('u_name',$users[0]->getUName());
+                    $session->set('isAdmin',$users[0]->getIsAdmin());
+                    return $this->redirectToRoute('app_productPage');
+                }
+                else{
+                    $session->getFlashBag()->add('notActiveAlert','Account is not active');
+                    return $this->redirectToRoute('app_login');
+                }
+            }
+            else{
+                $session->getFlashBag()->add('invalidMailOrPassword','invalid Mail Or Password');
+                return $this->redirectToRoute('app_login');
+            }
+
+
+        }
 
     }
 
 
-    public function sendEmail(MailerInterface $mailer,String $to='ahmed_00400@outlook.com',String $activation_code='1')
+    public function sendEmail(MailerInterface $mailer,String $to,String $activation_code)
     {
         $email = (new Email())
             ->from('ahmed_00400@outlook.com')
@@ -61,7 +125,7 @@ class LoginController extends AbstractController
             </p>
             <p style='margin: 30px 0;'>
               <!-- The link should lead to the activation URL -->
-              <a href='http://localhost:8000/x/WebProject/login/activate.php?email=$to&code=$activation_code' style='font-size:26px;background-color: #4fa284; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>
+              <a href='http://localhost:8000/activationLink?email=$to&code=$activation_code' style='font-size:26px;background-color: #4fa284; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>
                 Activate Account
               </a>
             </p>
