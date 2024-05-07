@@ -71,7 +71,7 @@ let dashboard = document.getElementById("dashboard");
 dashboard.addEventListener("click", () => {
     title.textContent = "AdminDashboard";
     title.style.textAlign = "start";
-    UpdatePage("dashboard");
+    UpdatePage("/dashboardQueries");
 });
 
 let users = document.getElementById("user");
@@ -81,7 +81,7 @@ users.addEventListener("click", () => {
     title.style.textAlign = "center";
     container[0].innerHTML =
         "<article class='stats'>  <div class='swiper mySwiper'><div class='swiper-wrapper'></div></div></article>";
-    UpdatePage("users");
+    UpdatePage("/usersQueries");
 });
 
 let sales = document.getElementById("sales");
@@ -89,7 +89,7 @@ sales.addEventListener("click", () => {
     title.style.textAlign = "start";
     title.textContent = "Sales";
     console.log("sales");
-    UpdatePage("sales");
+    UpdatePage("/salesQueries");
 });
 
 let products = document.getElementById("products");
@@ -99,54 +99,62 @@ products.addEventListener("click", () => {
     console.log("products");
     container[0].innerHTML =
         "<article class='stats'>  <div class='swiper mySwiper'><div class='swiper-wrapper'></div></div></article>";
-    UpdatePage("products");
+    UpdatePage("/productsQueries");
 });
 
 let comments = document.getElementById("comments");
 comments.addEventListener("click", () => {
     title.textContent = "Comments";
     title.style.textAlign = "start";
-    UpdatePage("comments");
+    UpdatePage("/commentsQueries");
 });
 
 //xmlhttprequest
+
 const UpdatePage = (str) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin", true);
+    xhr.open("POST", str,true);
     xhr.onload = function () {
         if (this.status === 200) {
             let response = JSON.parse(this.responseText);
-            if (str === "dashboard") {
-                updateForm.style.display = "none";
-                container[0].innerHTML = this.response;
-                showCharts(this.response.sales, this.response.nbOrders);
-            } else if (str === "users") {
-                document.querySelector(".swiper-wrapper").innerHTML =
-                    this.response;
+            if(response['msg']==='dashboard'){
+                console.log(response);
+                container[0].innerHTML = response['html'];
+                showCharts(response['income'],response['nbOrders']);
+            }
+            else if(response['msg']==="users"){
+                console.log(response);
+                document.querySelector(".swiper-wrapper").innerHTML = response['html'];
                 showSwiper();
                 selectDelete();
                 showForm();
-            } else if (str === "sales") {
-                container[0].innerHTML = this.response;
+            }
+            else if(response["msg"] === "sales"){
+                container[0].innerHTML = response["html"];
                 deleteSales();
-            } else if (str === "products") {
-                document.querySelector(".swiper-wrapper").innerHTML =
-                    this.response;
+            }
+            else if(response["msg"] === "products"){
+                document.querySelector(".swiper-wrapper").innerHTML = response["html"];
                 showSwiper();
                 productDeleteShow();
                 productEditShow();
-            } else if (str === "comments") {
-                container[0].innerHTML = this.response;
+            }
+            else if(response["msg"] === "comments"){
+                container[0].innerHTML = response["html"];
                 deleteComments();
             }
-        } else {
+        }
+
+
+        else{
             console.log("error");
         }
-    };
+        }
     xhr.setRequestHeader("Content-type", "application/json");
-    let msg = "msg=" + str;
-    xhr.send(msg);
-};
+    xhr.send();
+}
+
+
 
 const deleteComments = () => {
     let deleteBtns = document.querySelectorAll(".deleteComment");

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,17 +25,18 @@ class OrderRepository extends ServiceEntityRepository
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function thirtyDaysOrders(EntityManagerInterface $entityManager){
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('o')
+            ->from(Order::class, 'o')
+            ->where($queryBuilder->expr()->between('o.orderDate', ':startDate', ':endDate'))
+            ->setParameter('startDate', date('Y-m-d', strtotime('-30 days')))
+            ->setParameter('endDate', date('Y-m-d'));
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Order
 //    {

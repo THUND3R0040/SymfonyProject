@@ -23,7 +23,6 @@ class ProductPageController extends AbstractController
         $cartItems = [];
         if($session->has("u_email")){
             $cartItems = $doctrine->getRepository(Cart::class)->cartItemsForEmail($entityManager,$session->get("u_email"));
-
         }
         return $this->render('product_page/index.html.twig',
             ["cartItems" => $cartItems]

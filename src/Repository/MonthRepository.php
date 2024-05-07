@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Month;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,17 +25,49 @@ class MonthRepository extends ServiceEntityRepository
 //    /**
 //     * @return Month[] Returns an array of Month objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+// src/Repository/ProductRepository.php
+
+// ...
+
+    /**
+     * @throws Exception
+     */
+    public function incomeByMonth(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT MONTH(m.month) AS mOrder, IFNULL(SUM(o.total), 0) AS total_num
+        FROM month m
+        LEFT JOIN `order` o ON MONTH(m.month) = MONTH(o.order_date)
+        GROUP BY mOrder
+        ORDER BY mOrder ASC";
+
+        $resultSet = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function ordersByMonth(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT MONTH(m.month) AS mOrder, IFNULL(COUNT(o.total), 0) AS total_num
+        FROM month m
+        LEFT JOIN `order` o ON MONTH(m.month) = MONTH(o.order_date)
+        GROUP BY mOrder
+        ORDER BY mOrder ASC";
+
+        $resultSet = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+
+    }
 
 //    public function findOneBySomeField($value): ?Month
 //    {
