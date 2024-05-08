@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Comment;
 use App\Entity\Month;
 use App\Entity\Order;
@@ -309,7 +309,7 @@ class AdminInterfaceController extends AbstractController
     <tbody>";
 
         foreach ($comments as $comment) {
-            $commentId = htmlspecialchars($comment->getCId());
+            $commentId = htmlspecialchars($comment->getId());
             $email = htmlspecialchars($comment->getCEmail());
             $content = htmlspecialchars($comment->getCContent());
 
@@ -340,9 +340,12 @@ class AdminInterfaceController extends AbstractController
         return $response;
     }
 
-
-
-
+    #[Route('/logout', name: 'admin.logout')]
+    public function logout(Request $request): Response
+    {
+        $request->getSession()->invalidate();
+        return $this->redirectToRoute('app_login');
+    }
 
 
 }

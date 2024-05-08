@@ -52,8 +52,9 @@ p[2].addEventListener('click', function(){
 
 
 document.querySelector('.svg').addEventListener('click', function(){
-    window.location.href = 'http://localhost/x/WebProject/product_page/product.php';
-});    
+    window.history.back();
+});
+
 
 
 

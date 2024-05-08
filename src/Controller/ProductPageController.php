@@ -3,14 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Comment;
 use App\Entity\Product;
 
+use App\Form\ContactFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Util\Json;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,7 +153,42 @@ class ProductPageController extends AbstractController
 
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route('/contact', name:'contact')]
 
+    public function contact(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    {
+        $session=$request->getSession();
+
+
+        $userEmail = $session->get('u_email');
+        if ($userEmail===null) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Create a new comment object
+        $comment = new Comment();
+        $comment->setCEmail($userEmail);
+        $content=$request->get('textContent');
+
+        $email = (new Email())
+            ->from($userEmail)
+            ->to('aminos-jerbi@hotmail.com')
+            ->subject('Contact Form')
+            ->text($content);
+
+        $mailer->send($email);
+        $comment->setCContent($content);
+        $comment->setIsAnswered(0);
+
+        // Persist the comment to the database
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_productPage');
+    }
 }
 
 

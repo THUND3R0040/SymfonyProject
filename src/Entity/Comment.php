@@ -14,8 +14,6 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $c_id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $c_email = null;
@@ -29,18 +27,6 @@ class Comment
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCId(): ?int
-    {
-        return $this->c_id;
-    }
-
-    public function setCId(int $c_id): static
-    {
-        $this->c_id = $c_id;
-
-        return $this;
     }
 
     public function getCEmail(): ?string

@@ -67,9 +67,9 @@ session_start();
                     <p>Email</p>
                     <p>Password</p>
                 </div>
-                
+
                 <form class="fr2 chosen" method="post" action="/modify">
-                
+
                     <div class="inputWithIcon"data-aos="zoom-in-left">
                         <input type="text" placeholder="Password" class="inpt" name="password">
                         <i class="fas fa-unlock-alt fa-lg fa-fw" aria-hidden="true"></i>
@@ -87,13 +87,13 @@ session_start();
                     <div class="inputWithIcon inpt3"data-aos="zoom-in-left">
                         <input type="password" placeholder="New Password" class="inpt" name = "new-password">
                         <i class="fas fa-unlock-alt fa-lg fa-fw" aria-hidden="true"></i>
-                        
+
                     </div>
                     <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000" name="modify">Save</button>
-                
+
                 </form>
                 <button class = "logout" name = "logout" >
-                    <a href="../login/logout.php" >Log out</a>
+                    <a href="{{  path('user.logout') }}" >Log out</a>
                 </button>
             </div>
 

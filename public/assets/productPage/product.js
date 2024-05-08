@@ -1,13 +1,13 @@
 //reload page when click on logo
 $(document).ready(function () {
-    var src = "../mainPage/index.php";
+    var src = "/main";
     var a = $("<a/>").attr("href", src);
     $(".logo2").wrap(a);
 });
 
 
 $(document).ready(function () {
-    var src1 = "../mainPage/index.php";
+    var src1 = "/main";
     var a1 = $("<a/>").attr("href", src1);
     $(".logo").wrap(a1);
 });

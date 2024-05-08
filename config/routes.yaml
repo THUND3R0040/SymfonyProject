@@ -11,3 +11,7 @@ filterProduct:
 cart:
     path : /cart
     controller : App\Controller\ProductPageController::cart
+
+
+logout:
+    path: /logout
