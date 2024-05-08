@@ -19,7 +19,7 @@ class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
 
-    public function index(MailerInterface $mailer): Response
+    public function index(): Response
     {
         //retrieving the login page
         return $this->render('login/index.html.twig');
@@ -77,6 +77,7 @@ class LoginController extends AbstractController
                     $session->set('u_email',$req->get('email'));
                     $session->set('u_name',$users[0]->getUName());
                     $session->set('isAdmin',$users[0]->getIsAdmin());
+                    $session->set('u_pw',$users[0]->getUPassword());
                     return $this->redirectToRoute('app_productPage');
                 }
                 else{
@@ -103,6 +104,7 @@ class LoginController extends AbstractController
             ->subject('Nouveau message')
             ->html("<!DOCTYPE html>
     <html lang='en'>
+    <title>Activation</title>
     <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
