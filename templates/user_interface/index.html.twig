@@ -24,9 +24,7 @@ session_start();
 
 
     
-        <div class="activation-alert" >
-            Account modified successfully
-        </div>
+
 
 
     <section class='bg'>    
@@ -101,12 +99,12 @@ session_start();
         </div>
     </section>
 {% for message in app.flashes('modify') %}
-    <div class="alert alert-success">
+    <div class="modify">
         {{ message }}
     </div>
 {% endfor %}
 {% for message in app.flashes('error') %}
-    <div class="alert alert-danger">
+    <div class="error">
         {{ message }}
     </div>
 {% endfor %}

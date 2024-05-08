@@ -52,10 +52,24 @@ p[2].addEventListener('click', function(){
 
 
 document.querySelector('.svg').addEventListener('click', function(){
-    window.location.href = 'http://localhost/x/WebProject/product_page/product.php';
+    window.location.href = '/productPage';
 });    
 
 
 
 
-let activation_alert =  document.querySelector('.activation-alert');
+let modify =  document.querySelector('.modify');
+let error = document.querySelector(".error");
+
+if(modify){
+    setTimeout(()=>{
+        modify.style.display = "none";
+    },5000);
+}
+
+
+if(error){
+    setTimeout(()=>{
+        error.style.display = "none";
+    },5000);
+}

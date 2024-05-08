@@ -45,23 +45,26 @@ class UserInterfaceController extends AbstractController
             
             if ($newName !== null) {
                 $user->setUName($newName);
-                $this->addFlash('modify', 'Name changed successfully');
-                return $this->redirectToRoute('user.interface');
+                $entityManagerInterface->flush();
+                $session->getFlashBag()->add('modify', 'Name changed successfully');
+
             } elseif ($newEmail !== null) {
                 $user->setUEmail($newEmail);
-                $this->addFlash('modify', 'Email changed successfully');
-                return $this->redirectToRoute('user.interface');
+                $entityManagerInterface->flush();
+                $session->getFlashBag()->add('modify', 'Email changed successfully');
+
             } elseif ($newPassword !== null) {
                 $user->setUPassword(password_hash($newPassword, PASSWORD_BCRYPT));
-                $this->addFlash('modify', 'Password changed successfully');
-                return $this->redirectToRoute('user.interface');
+                $entityManagerInterface->flush();
+                $session->getFlashBag()->add('modify', 'Password changed successfully');
+
             }
             
-            $entityManagerInterface->flush();
+
 
             } else {
-                $this->addFlash('error', 'Invalid password, try again.');
-                return $this->redirectToRoute('user.interface');
+                $session->getFlashBag()->add('error', 'Invalid password, try again.');
+
             }
             
         
