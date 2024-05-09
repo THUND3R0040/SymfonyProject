@@ -347,5 +347,136 @@ class AdminInterfaceController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
+    public function markCommentAnswered(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        // Find the comment by ID
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
 
+        // Update the comment status
+        $comment->setIsAnswered(true);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    public function deleteProductByName(Request $request, EntityManagerInterface $entityManager, $name): Response
+    {
+        // Find the product by name
+        $product = $entityManager->getRepository(Product::class)->findOneBy(['name' => $name]);
+
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        // Remove the product
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    public function deleteOrderByID(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        // Find the order by ID
+        $order = $entityManager->getRepository(Order::class)->find($id);
+
+        if (!$order) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Order not found']);
+        }
+
+        // Remove the order
+        $entityManager->remove($order);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    #[Route('/deleteUser', name: 'deleteUser')]
+    public function deleteUserByEmail(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $email = $request->getContent();
+        $email=json_decode($email,true);
+        $email=$email['userEmail'];
+        // Find the user by email
+        $user = $entityManager->getRepository(User::class)->findOneBy(['u_email' => $email]);
+
+        if (!$user) {
+            return new JsonResponse(['status' => 'error', 'message' => 'User not found']);
+        }
+
+        // Remove the user
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        return $response;
+    }
+
+    public function updateProductDetails(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Get request parameters
+
+        $name = $request->request->get('name');
+        $newName = $request->request->get('newName');
+        $price = $request->request->get('newPrice');
+        $type = $request->request->get('newType');
+
+        // Find the product by name
+        $product = $entityManager->getRepository(Product::class)->findOneBy(['name' => $name]);
+
+        if (!$product) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        // Update product details
+        $product->setName($newName);
+        $product->setPrice($price);
+        $product->setType($type);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success']);
+    }
+
+    #[Route('/updateUser', name: 'updateuser')]
+    public function updateUserDetails(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Get request parameters
+        $res = $request->getContent();
+        $resdecoded=json_decode($res,true);
+        $email=$resdecoded['userEmail'];
+
+        $newRole = trim($resdecoded['newRole']);
+        $newName = trim($resdecoded['newName']);
+        $newEmail = trim($resdecoded['newEmail']);
+        // Find the user by email
+        $user = $entityManager->getRepository(User::class)->findOneBy(['u_email' => $email]);
+
+        if (!$user) {
+            return new JsonResponse(['status' => 'error', 'message' => 'User not found']);
+        }
+
+
+        // Update user details
+        if($newRole ==='admin') {
+            $user->setIsAdmin(1);
+        } else if ($newRole === 'user') {
+            $user->setIsAdmin(0);
+        }
+        if ($newName!=="")
+        {
+            $user->setUName($newName);
+        }
+
+        if ($newEmail!=="") {
+            $user->setUEmail($newEmail);
+        }
+
+        $entityManager->flush();
+
+
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        return $response;
+    }
 }
