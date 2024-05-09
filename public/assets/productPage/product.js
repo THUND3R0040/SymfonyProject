@@ -100,7 +100,7 @@ let checkout = document.querySelector(".checkout");
  checkout.addEventListener("click", () => {
     let price = document.querySelector(".money").innerHTML;
     let nbItems = document.querySelector(".num").innerHTML;
-    window.location.href = `checkout.php?price=${price}&nbItems=${nbItems}`;
+    window.location.href = `/checkout/${price.slice(0,price.length-1)}/${nbItems}`;
 });
 
 

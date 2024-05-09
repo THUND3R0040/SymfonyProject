@@ -1,12 +1,56 @@
-
-
-
-
-{% block body %}
-<div>
-    <h1>Account Activated</h1>
-    <p>Your account has been activated. You can now login.</p>
-    <a href={{ path('app_login') }}>Login</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .activation-link {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightgreen; /* Changed color to light green */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center; /* Centering the text */
+        }
+        .activation-link:hover {
+            background-color: #5cb85c; /* Darker shade of green on hover */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Activate Your Account</h1>
+    <p>Your Account Has Been Activated Successfully. Click Here To Continue To Our Main Page:</p>
+    <a href="{{ path('app_login') }}" class="activation-link">Login</a>
 </div>
-
-{% endblock %}
+</body>
+</html>
