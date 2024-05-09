@@ -138,7 +138,9 @@ const UpdatePage = (str) => {
                 showSwiper();
                 productDeleteShow();
                 productEditShow();
+
             }
+
             else if(response["msg"] === "comments"){
                 container[0].innerHTML = response["html"];
                 deleteComments();
@@ -170,18 +172,17 @@ const deleteComments = () => {
 
 const deleteComment = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/deleteComment", true);
+    xhr.open("POST", "/deleteComment", true);
     xhr.onload = function () {
         if (this.status === 200) {
-            if (this.responseText === "success") {
-                UpdatePage("comments");
-            }
+                UpdatePage("/commentsQueries");
+
         } else {
             console.log("error");
         }
     };
     xhr.setRequestHeader("Content-type", "application/json");
-    let msg = "id=" + id;
+    let msg = JSON.stringify({id:id});
     xhr.send(msg);
 };
 
@@ -263,18 +264,17 @@ const productDeleteShow = () => {
 
 const deleteProduct = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/deleteProduct", true);
+    xhr.open("POST", '/deleteProduct', true);
     xhr.onload = function () {
         if (this.status === 200) {
-            if (this.responseText === "success") {
-                UpdatePage("products");
-            }
+                UpdatePage("/productsQueries");
+                window.location.reload();
         } else {
             console.log("error");
         }
     };
     xhr.setRequestHeader("Content-type", "application/json");
-    let msg = "id=" + id;
+    let msg = JSON.stringify({id: id});
     xhr.send(msg);
 };
 
@@ -343,6 +343,7 @@ const deleteUser = (id) => {
     xhr.onload = function () {
         if (this.status === 200) {
                 UpdatePage('/usersQueries');
+                window.location.reload();
         } else {
             console.log("error");
         }

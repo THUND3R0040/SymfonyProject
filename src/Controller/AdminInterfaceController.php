@@ -359,11 +359,16 @@ class AdminInterfaceController extends AbstractController
         return new JsonResponse(['status' => 'success']);
     }
 
-    public function deleteProductByName(Request $request, EntityManagerInterface $entityManager, $name): Response
-    {
-        // Find the product by name
-        $product = $entityManager->getRepository(Product::class)->findOneBy(['name' => $name]);
 
+    #[Route('deleteProduct',name:'delete.product')]
+    public function deleteProduct(Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $id = $request->getContent();
+        $id=json_decode($id,true);
+        $id=$id['id'];
+        // Find the product by name
+        $product = $entityManager->getRepository(Product::class)->findOneBy(['p_name' => $id]);
         if (!$product) {
             return new JsonResponse(['status' => 'error', 'message' => 'Product not found']);
         }
@@ -372,7 +377,9 @@ class AdminInterfaceController extends AbstractController
         $entityManager->remove($product);
         $entityManager->flush();
 
-        return new JsonResponse(['status' => 'success']);
+        $response=new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        return $response;
     }
 
     public function deleteOrderByID(Request $request, EntityManagerInterface $entityManager, $id): Response
@@ -479,4 +486,28 @@ class AdminInterfaceController extends AbstractController
         $response->setStatusCode(Response::HTTP_OK);
         return $response;
     }
+
+
+    #[Route('/deleteComment', name: 'delete.comment')]
+    public function DeleteComment(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $id = $request->getContent();
+        $id=json_decode($id,true);
+        $id=$id['id'];
+        // Find the user by email
+        $comment = $entityManager->getRepository(User::class)->findOneBy(['id' => $id]);
+
+        if (!$comment) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Comment not found']);
+        }
+
+        // Remove the user
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->setStatusCode(Response::HTTP_OK);
+        return $response;
+    }
+
 }
