@@ -15,3 +15,27 @@ cart:
 
 logout:
     path: /logout
+
+mark_comment_answered:
+    path: /admin/mark-comment-answered/{id}
+    controller: App\Controller\AdminInterfaceController::markCommentAnswered
+
+delete_product_by_name:
+    path: /admin/delete-product/{name}
+    controller: App\Controller\AdminInterfaceController::deleteProductByName
+
+delete_order_by_id:
+    path: /admin/delete-order/{id}
+    controller: App\Controller\AdminInterfaceController::deleteOrderByID
+
+delete_user_by_email:
+    path: /admin/delete-user/{email}
+    controller: App\Controller\AdminInterfaceController::deleteUserByEmail
+
+update_product_details:
+    path: /admin/update-product-details
+    controller: App\Controller\AdminInterfaceController::updateProductDetails
+
+update_user_details:
+    path: /admin/update-user-details
+    controller: App\Controller\AdminInterfaceController::updateUserDetails

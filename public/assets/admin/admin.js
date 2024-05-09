@@ -339,18 +339,18 @@ save.addEventListener("click", () => {
 
 const deleteUser = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/deleteUser", true);
+    xhr.open("POST", "/deleteUser", true);
     xhr.onload = function () {
         if (this.status === 200) {
-            if (this.responseText === "success") {
-                UpdatePage("users");
-            }
+                UpdatePage('/usersQueries');
         } else {
             console.log("error");
         }
     };
     xhr.setRequestHeader("Content-type", "application/json");
-    let msg = "userEmail=" + id;
+    let msg = JSON.stringify({
+        userEmail:id
+    });
     xhr.send(msg);
 };
 
@@ -380,26 +380,19 @@ cancel.addEventListener("click", () => {
 //email is not getting true value
 const updateUser = (email, newEmail, newRole, newName) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/updateUser", true);
+    xhr.open("POST", "/updateUser", true);
     xhr.onload = function () {
         if (this.status === 200) {
-            if (this.responseText === "success") {
-                UpdatePage("users");
-            }
+                UpdatePage("/usersQueries");
         } else {
             console.log("error");
         }
     };
     xhr.setRequestHeader("Content-type", "application/json");
-    let msg =
-        "email=" +
-        email +
-        "&newEmail=" +
-        newEmail +
-        "&newRole=" +
-        newRole +
-        "&newName=" +
-        newName;
+    let msg = JSON.stringify({
+        userEmail:email, newName: newName, newEmail:newEmail, newRole:newRole
+    });
+
     xhr.send(msg);
 };
 
